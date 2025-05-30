@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <>
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-        <div className="navbar_contents">
+        <div className="navbar_contents container">
           {/* Desktop Navigation - Left Items */}
           <div className="desktop-nav nav-items_left">
             <NavLink to="/" className="nav-item_left" onClick={closeMenu}>
