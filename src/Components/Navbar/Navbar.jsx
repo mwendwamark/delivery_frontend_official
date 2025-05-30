@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import { RiUserLine, RiCloseLine } from "react-icons/ri";
 import { IoSearchOutline, IoMenu } from "react-icons/io5";
+import { GiWineBottle } from "react-icons/gi";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -57,11 +58,10 @@ const Navbar = () => {
 
           {/* Logo - Center */}
           <div className="nav-items_logo">
-            <h1>
               <NavLink to="/" className="nav-item" onClick={closeMenu}>
-                Liqour <br /> Chap Chap
+              <GiWineBottle className="logo-icon" />
+                Liquor <br /> Chap Chap
               </NavLink>
-            </h1>
           </div>
 
           {/* Desktop Navigation - Right Items */}
