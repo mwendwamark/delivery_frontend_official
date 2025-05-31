@@ -5,6 +5,7 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import { RiUserLine, RiCloseLine } from "react-icons/ri";
 import { IoSearchOutline, IoMenu } from "react-icons/io5";
 import { GiWineBottle } from "react-icons/gi";
+import "../../assets/Fonts/ciguatera.regular.otf";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -58,9 +59,9 @@ const Navbar = () => {
 
           {/* Logo - Center */}
           <div className="nav-items_logo">
-              <NavLink to="/" className="nav-item" onClick={closeMenu}>
-              <GiWineBottle className="logo-icon" />
-                Liquor <br /> Chap Chap
+              <NavLink to="/" className="nav-logo" onClick={closeMenu}>
+                <span className="logo-line">Liquor</span>
+                <span className="logo-line">ChapChap</span>
               </NavLink>
           </div>
 
