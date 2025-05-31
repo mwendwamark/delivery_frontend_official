@@ -86,7 +86,7 @@
   color: var(--primary-color);
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   transition: all 0.3s ease;
 }
 

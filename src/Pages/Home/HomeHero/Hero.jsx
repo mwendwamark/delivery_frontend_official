@@ -25,9 +25,9 @@ const Hero = () => {
             your doorstep.
           </p>
           <div className="hero-cta">
-            <NavLink to="#products" className="btn btn-home_hero">
+            <a href="#products" className="btn btn-home_hero">
               Our Collection <HiOutlineArrowLongRight className="btn-icon" />
-            </NavLink>
+            </a>
             <NavLink to="#contact" className="btn btn-outline-white">
               Contact Us
             </NavLink>
