@@ -17,7 +17,7 @@ const Hero = () => {
           </span>
           <h1>
             Quality Liquor, <br />
-            Delivered to Your Door
+            Delivered to Your Door Step
           </h1>
           <p className="hero-description">
             Experience the finest selection of premium wines, rare spirits, and
