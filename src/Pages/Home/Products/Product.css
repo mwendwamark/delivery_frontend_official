@@ -1,8 +1,9 @@
 /* Products Section Styles */
 .home-products {
-  background: linear-gradient(135deg, #f2e2e2 0%, #fffbfa 100%);
+  background: linear-gradient(135deg, var(--bg-color) 0%, var(--primary-color) 100%, );
   position: relative;
   overflow: hidden;
+  border-top: 1px solid var(--sec-color);
 }
 
 .background-decoration {

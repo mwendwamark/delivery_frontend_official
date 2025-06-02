@@ -151,6 +151,39 @@ a:hover {
 .subtitle-icon {
   font-size: 1.6rem;
 }
+
+
+.subtitle-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #d4af37;
+  margin-bottom: 1rem;
+}
+
+.subtitle-icon-center {
+  font-size: 1.6rem;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(180deg); }
+}
+
+/* .section-title {
+  font-size: 3rem;
+  font-weight: 300;
+  color: #5a0e0e;
+  margin-bottom: 1rem;
+  font-family: 'Questrial', sans-serif;
+  line-height: 1.2;
+} */
 /* ===== BUTTON STYLES ===== */
 .btn {
   display: inline-flex;

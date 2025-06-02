@@ -82,7 +82,7 @@ const Products = () => {
   ];
 
   return (
-    <section className="home-products section-spacing">
+    <section className="home-products section-spacing" id="products">
       {/* Background decoration */}
       <div className="background-decoration"></div>
 
