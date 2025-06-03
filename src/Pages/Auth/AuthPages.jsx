@@ -505,12 +505,12 @@ const AuthPages = () => {
               className="decoration-image"
             />
             <h2 className="decoration-title">
-              {currentPage === "login" ? "Welcome Back" : "Join Our Community"}
+              {currentPage === "login" ? "Welcome Back" : "Sign up today!"}
             </h2>
             <p className="decoration-text">
               {currentPage === "login"
                 ? "Sign in to access your personalized wine recommendations and exclusive offers."
-                : "Create an account to start exploring our curated collection of fine wines."}
+                : "Create an account to start exploring our curated collection of liquor."}
             </p>
           </div>
         </div>
