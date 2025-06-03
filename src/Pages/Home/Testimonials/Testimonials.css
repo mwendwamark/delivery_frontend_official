@@ -19,7 +19,7 @@
   position: absolute;
   border-radius: 50%;
   background: linear-gradient(45deg, rgba(212, 175, 55, 0.1), rgba(140, 54, 59, 0.1));
-  animation: float 6s ease-in-out infinite;
+  animation: testimonialfloat 6s ease-in-out infinite;
 }
 
 .element-1 {
@@ -46,7 +46,7 @@
   animation-delay: 4s;
 }
 
-@keyframes float {
+@keyframes testimonialfloat {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(180deg); }
 }

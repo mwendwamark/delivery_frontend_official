@@ -274,7 +274,7 @@
   color: var(--accent-light);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1060px) {
   .navbar_contents {
     display: flex;
     justify-content: flex-start;
@@ -315,7 +315,7 @@
   }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1060px) {
   .mobile-menu-overlay,
   .mobile-menu {
     display: none !important;
