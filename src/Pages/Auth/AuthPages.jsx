@@ -15,42 +15,6 @@ import { authAPI } from "../../Config/api";
 import "./AuthPages.css";
 import img1 from "../../assets/Images/HomeImages/HeroImage.jpg";
 
-// Helper function for API calls
-const apiCall = async (url, options = {}) => {
-  const defaultOptions = {
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-  };
-
-  const mergedOptions = {
-    ...defaultOptions,
-    ...options,
-    headers: {
-      ...defaultOptions.headers,
-      ...options.headers,
-    },
-  };
-
-  try {
-    const response = await fetch(url, mergedOptions);
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(
-        errorData.message || `HTTP error! status: ${response.status}`
-      );
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("API call failed:", error);
-    throw error;
-  }
-};
-
 // Message component
 const MessageAlert = ({ type, text }) => {
   if (!text) return null;
@@ -404,6 +368,16 @@ const AuthPages = () => {
         password: loginData.password,
       });
 
+      // Check if the user is a customer (role 0)
+      if (response.user.role !== 0) {
+        showMessage("error", "Access Denied: This portal is for customers only.");
+        // Force sign out and clear session if role mismatch
+        authAPI.signOut();
+        sessionStorage.removeItem("user");
+        sessionStorage.removeItem("authToken");
+        return;
+      }
+
       showMessage("success", response.message || "Login successful!");
       sessionStorage.setItem("user", JSON.stringify(response.user));
       sessionStorage.setItem("authToken", response.token);
@@ -440,7 +414,9 @@ const AuthPages = () => {
     }
 
     try {
-      const { password_confirmation, ...userData } = signupData;
+      const { password_confirmation: _, ...userData } = signupData;
+      // Ensure role is set to 0 (customer) for this portal
+      userData.role = 0;
       const response = await authAPI.signUp(userData);
 
       showMessage(
