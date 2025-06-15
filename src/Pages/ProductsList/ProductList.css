@@ -1,0 +1,190 @@
+.product_list-product-section {
+  position: relative;
+}
+
+.product_list-contents{
+  padding: 2rem;
+}
+
+.product_list-product-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  justify-content: center;
+  margin: 0 auto;
+}
+
+
+.product_list-product-card {
+  background-color: var(--primary-color); 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  border-radius: 12px; 
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); 
+}
+
+.product_list-product-card:hover {
+  transform: translateY(-8px); 
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); 
+}
+
+.product_list-product-media {
+  width: 100%;
+  height: 250px; 
+  object-fit: contain;
+  padding: 1rem; 
+  background-color: var(--dark); 
+}
+
+.product_list-product-content {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product_list-product-title {
+  font-family: "Questrial", sans-serif;
+  font-size: var(--text-xl); 
+  color: var(--wine-dark);
+  margin-bottom: 0.75rem;
+  font-weight: var(--font-weight-medium);
+}
+
+.product_list-product-description {
+  font-size: var(--text-sm);
+  color: var(--text-light);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.product_list-product-detail {
+  font-size: var(--text-xs);
+  color: var(--text-dark);
+  margin-bottom: 0.4rem; 
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+
+.product_list-product-detail::before {
+  content: "•"; 
+  color: var(--accent-light);
+  font-weight: bold;
+}
+
+
+.product_list-form-control {
+  margin-top: 1.5rem;
+  width: 100%;
+}
+
+.product_list-input-label {
+  color: var(--wine-dark) !important;
+  font-family: "Didact Gothic", sans-serif;
+  font-size: var(--text-sm);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.product_list-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--sec-color);
+  border-radius: 8px;
+  background-color: var(--gray); 
+  color: var(--wine-dark);
+  font-family: "Didact Gothic", sans-serif;
+  font-size: var(--text-base);
+  appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%238c363b" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); 
+  background-repeat: no-repeat;
+  background-position: right 0.7rem top 50%;
+  background-size: 20px auto;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product_list-select:focus {
+  outline: none;
+  border-color: var(--accent-light);
+  box-shadow: 0 0 0 3px rgba(188, 54, 59, 0.2); 
+}
+
+.product_list-menu-item {
+  font-family: "Didact Gothic", sans-serif;
+  font-size: var(--text-base);
+  color: var(--wine-dark);
+  padding: 0.75rem 1rem;
+  background-color: var(--primary-color);
+}
+
+.product_list-menu-item:hover {
+  background-color: var(--sec-color);
+}
+
+
+.product_list-add-to-cart-btn {
+  margin-top: 1.5rem;
+  padding: 0.85rem 1.5rem;
+  background-color: var(--accent-light); 
+  color: var(--primary-color); 
+  border: none;
+  border-radius: 8px;
+  font-family: "Questrial", sans-serif;
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(188, 54, 59, 0.3);
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.product_list-add-to-cart-btn:hover {
+  background-color: var(--wine-dark); 
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(90, 14, 14, 0.4);
+}
+
+.product_list-add-to-cart-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(90, 14, 14, 0.2);
+}
+
+
+@media (max-width: 768px) {
+  .product_list-product-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .product_list-product-section {
+    padding: 3rem 1rem;
+  }
+
+  .product_list-product-media {
+    height: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product_list-product-grid {
+    grid-template-columns: 1fr; 
+  }
+
+  .product_list-product-title {
+    font-size: var(--text-lg);
+  }
+
+  .product_list-product-content {
+    padding: 1rem;
+  }
+}

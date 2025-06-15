@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import {
   Eye,
   EyeOff,
@@ -14,6 +14,7 @@ import { HiOutlineArrowLongRight } from "react-icons/hi2";
 import { authAPI } from "../../Config/api";
 import "./AuthPages.css";
 import img1 from "../../assets/Images/HomeImages/HeroImage.jpg";
+import { useNavigate } from "react-router-dom"; // ⭐⭐⭐ IMPORT useNavigate ⭐⭐⭐
 
 // Message component
 const MessageAlert = ({ type, text }) => {
@@ -27,7 +28,7 @@ const MessageAlert = ({ type, text }) => {
   );
 };
 
-// LoginForm component
+// LoginForm component (No changes needed here, it receives handleLogin as prop)
 const LoginForm = ({
   loginData,
   setLoginData,
@@ -116,7 +117,7 @@ const LoginForm = ({
   </div>
 );
 
-// SignupForm component
+// SignupForm component (No changes needed here, it receives handleSignup as prop)
 const SignupForm = ({
   signupData,
   setSignupData,
@@ -336,6 +337,8 @@ const AuthPages = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const navigate = useNavigate(); // ⭐⭐⭐ INITIALIZE useNavigate ⭐⭐⭐
+
   // Login form state
   const [loginData, setLoginData] = useState({
     email: "",
@@ -382,12 +385,16 @@ const AuthPages = () => {
       sessionStorage.setItem("user", JSON.stringify(response.user));
       sessionStorage.setItem("authToken", response.token);
       setLoginData({ email: "", password: "" });
+
+      // ⭐⭐⭐ REDIRECT ON SUCCESSFUL LOGIN ⭐⭐⭐
+      navigate('/products');
+
     } catch (error) {
       showMessage("error", error.message || "Login failed");
     } finally {
       setLoading(false);
     }
-  }, [loginData, showMessage]);
+  }, [loginData, showMessage, navigate]); // ⭐⭐⭐ Add navigate to useCallback dependency array ⭐⭐⭐
 
   const handleSignup = useCallback(async () => {
     setLoading(true);
@@ -433,6 +440,7 @@ const AuthPages = () => {
         date_of_birth: "",
         role: 0,
       });
+      // After successful signup and message, navigate to login page
       setTimeout(() => setCurrentPage("login"), 2000);
     } catch (error) {
       showMessage("error", error.message || "Registration failed");
