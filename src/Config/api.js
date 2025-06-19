@@ -7,6 +7,10 @@ const API_ENDPOINTS = {
     SIGN_IN: `${API_BASE_URL}/users/sign_in`,
     SIGN_OUT: `${API_BASE_URL}/users/sign_out`,
   },
+  PRODUCTS: {
+    GET_ALL: `${API_BASE_URL}/products`,
+    GET_BY_ID: (id) => `${API_BASE_URL}/products/${id}`,
+  },
 };
 
 // Helper function for API calls
@@ -76,6 +80,24 @@ export const authAPI = {
   signOut: () => {
     return apiCall(API_ENDPOINTS.AUTH.SIGN_OUT, {
       method: "DELETE",
+    });
+  },
+};
+
+export const productsAPI = {
+  // Get all products
+  getAll: (params = {}) => {
+    const queryString = new URLSearchParams(params).toString();
+    const url = queryString 
+      ? `${API_ENDPOINTS.PRODUCTS.GET_ALL}?${queryString}` 
+      : API_ENDPOINTS.PRODUCTS.GET_ALL;
+    return apiCall(url, { method: "GET" });
+  },
+
+  // Get product by ID
+  getById: (id) => {
+    return apiCall(API_ENDPOINTS.PRODUCTS.GET_BY_ID(id), {
+      method: "GET",
     });
   },
 };

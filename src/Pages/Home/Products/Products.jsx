@@ -4,6 +4,7 @@ import {  FaShoppingCart, FaEye } from "react-icons/fa";
 import { LiaGlassWhiskeySolid } from "react-icons/lia";
 import { HiOutlineArrowLongRight } from "react-icons/hi2";
 import "./Product.css";
+import { NavLink } from "react-router-dom";
 
 const Products = () => {
   const [hoveredProduct, setHoveredProduct] = useState(null);
@@ -188,10 +189,10 @@ const Products = () => {
               carefully selected spirits and wines
             </p>
 
-            <button className="btn cta-button">
+            <NavLink to='/products' className="btn cta-button">
               View All Products
               <HiOutlineArrowLongRight className="btn-icon" />
-            </button>
+            </NavLink>
           </div>
         </div>
       </div>
