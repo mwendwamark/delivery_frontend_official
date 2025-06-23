@@ -5,6 +5,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import AuthPages from "./Pages/Auth/AuthPages";
 import ProductList from "./Pages/ProductsList/ProductList";
 import ProductDetails from "./Pages/ProductsList/ProductDetails";
+import FAQsPage from "./Pages/FAQs/FAQSPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/authentication" element={<AuthPages />}></Route>
           <Route path="/products" element={<ProductList />}></Route>
           <Route path="/products/:id" element={<ProductDetails />}></Route>
+          <Route path="/faqs" element={<FAQsPage />}></Route>
         </Routes>
       </BrowserRouter>
     </>
