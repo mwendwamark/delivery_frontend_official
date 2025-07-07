@@ -30,6 +30,8 @@
   --text-2xl: 1.5rem;
   --text-3xl: 1.875rem;
   --text-4xl: 2.25rem;
+  --navbar-height: 6.7rem; /* Based on your current .section padding-top */
+  --navbar-height-scrolled: 5rem;
 
   /* Effects */
   --transition: all 0.3s ease;
@@ -121,13 +123,19 @@ a:hover {
   font-weight: var(--font-weight-thick);
 }
 
+.navbar.scrolled + .section {
+  /* Apply padding adjustment to the *next sibling* of a scrolled navbar */
+  padding-top: var(--navbar-height-scrolled);
+  transition: padding-top 0.3s ease; /* Smooth transition for content shift */
+}
+
 .container {
   max-width: 90%;
   margin: 0 auto;
 }
 
 .section {
-  padding-top: 6.7rem;
+  padding-top: var(--navbar-height);
 }
 
 .section-spacing {
@@ -152,7 +160,6 @@ a:hover {
   font-size: 1.6rem;
 }
 
-
 .subtitle-center {
   display: flex;
   align-items: center;
@@ -172,8 +179,13 @@ a:hover {
 }
 
 @keyframes sparkle {
-  0%, 100% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.1) rotate(180deg); }
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(180deg);
+  }
 }
 
 /* .section-title {

@@ -127,6 +127,35 @@
   color: var(--wine-dark);
   cursor: pointer;
   transition: color 0.3s ease;
+  position: relative;
+}
+
+.cart-icon-container {
+  position: relative;
+  display: inline-flex;
+}
+
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--wine-deep);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
 }
 
 .nav-right_icon:hover,
@@ -268,10 +297,37 @@
   color: var(--wine-dark);
   cursor: pointer;
   transition: color 0.3s ease;
+  position: relative;
+  display: inline-flex;
 }
 
 .mobile-header-icon:hover {
   color: var(--accent-light);
+}
+
+/* Ensure the cart icon container in mobile header is properly aligned */
+.mobile-header-icons .cart-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile nav icons */
+.mobile-nav-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: rgba(90, 14, 14, 0.1);
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-icon .cart-count {
+  top: -5px;
+  right: -5px;
 }
 
 @media (max-width: 1060px) {

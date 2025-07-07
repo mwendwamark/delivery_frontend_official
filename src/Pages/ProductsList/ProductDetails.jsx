@@ -1,20 +1,21 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { MoveLeft, CreditCard } from "lucide-react";
+import { MoveLeft, CreditCard, ShoppingCart } from "lucide-react";
 import { HiOutlineShoppingCart } from "react-icons/hi";
-import { productsAPI } from "../../Config/api"; // Adjust the path as needed
-// import { API_BASE_URL, apiCall, productsAPI } from "../../Config/api";
-
+import { productsAPI } from "../../Config/api";
+import { useCart } from "../../contexts/CartContext";
 import "./ProductDetails.css";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const { addToCart, itemCount } = useCart();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedVariantId, setSelectedVariantId] = useState("");
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [showCartSuccess, setShowCartSuccess] = useState(false);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -57,25 +58,24 @@ const ProductDetails = () => {
     );
 
     if (selectedVariant) {
+      setIsAddingToCart(true);
       try {
-        // API call to add item to cart
-        // const cartData = {
-        //   product_id: product.id,
-        //   variant_id: selectedVariantId,
-        //   quantity: 1,
-        // };
-
-        // await cartAPI.addItem(cartData);
-
-        console.log(
-          `Added ${product.name} (Size: ${selectedVariant.size}, Price: $${selectedVariant.price}) to cart!`
-        );
-        alert(
-          `Added ${product.name} (${selectedVariant.size}) to cart! Price: KES ${selectedVariant.price}`
-        );
+        // Add to cart using context
+        addToCart(product, {
+          id: selectedVariantId,
+          size: selectedVariant.size,
+          price: selectedVariant.price
+        });
+        
+        // Show success message
+        setShowCartSuccess(true);
+        setTimeout(() => setShowCartSuccess(false), 3000);
+        
       } catch (error) {
         console.error("Failed to add item to cart:", error);
         alert("Failed to add item to cart. Please try again.");
+      } finally {
+        setIsAddingToCart(false);
       }
     } else {
       alert("Selected variant not found. Please try again.");
@@ -213,19 +213,26 @@ const ProductDetails = () => {
 
           <div className="product_detail-order-btns">
             <button
-              className="product_detail-add-to-cart-btn btn btn-primary"
+              className={`add-to-cart-button ${isAddingToCart ? 'adding' : ''}`}
               onClick={handleAddToCart}
-              disabled={
-                !currentSelectedVariant || currentSelectedVariant.stock === 0
-              }
+              disabled={!selectedVariantId || isAddingToCart}
             >
-              <HiOutlineShoppingCart size={18} />
-              {currentSelectedVariant && currentSelectedVariant.stock === 0
-                ? "Out of Stock"
-                : "Add to Cart"}
+              {isAddingToCart ? (
+                'Adding...'
+              ) : (
+                <>
+                  <HiOutlineShoppingCart size={20} />
+                  Add to Cart
+                </>
+              )}
             </button>
+            {showCartSuccess && (
+              <div className="cart-success-message">
+                Added to cart! <a href="/cart">View Cart</a>
+              </div>
+            )}
             <button
-              className="product_detail-buy-now-btn btn btn-outline"
+              className="product_detail-buy-now-btn"
               onClick={handleBuyNow}
               disabled={
                 !currentSelectedVariant || currentSelectedVariant.stock === 0

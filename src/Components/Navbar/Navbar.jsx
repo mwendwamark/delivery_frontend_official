@@ -5,11 +5,13 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 import { RiUserLine, RiCloseLine } from "react-icons/ri";
 import { IoSearchOutline, IoMenu } from "react-icons/io5";
 import { GiWineBottle } from "react-icons/gi";
+import { useCart } from "../../contexts/CartContext";
 import "../../assets/Fonts/ciguatera.regular.otf";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { itemCount } = useCart();
 
   // Handle scroll effect
   useEffect(() => {
@@ -82,9 +84,10 @@ const Navbar = () => {
             <div className="nav-item_right-icon">
               <IoSearchOutline className="nav-right_icon" />
             </div>
-            <div className="nav-item_right-icon">
+            <NavLink to="/cart" className="nav-item_right-icon cart-icon-container">
               <HiOutlineShoppingCart className="nav-right_icon" />
-            </div>
+              {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
+            </NavLink>
             <div className="nav-item_right-icon">
               <NavLink to="/authentication">
                 <RiUserLine className="nav-right_icon" />
@@ -102,7 +105,10 @@ const Navbar = () => {
           {/* Mobile Header Icons */}
           <div className="mobile-header-icons">
             <IoSearchOutline className="mobile-header-icon" />
-            <HiOutlineShoppingCart className="mobile-header-icon" />
+            <NavLink to="/cart" className="mobile-header-icon cart-icon-container" onClick={closeMenu}>
+              <HiOutlineShoppingCart className="mobile-header-icon" />
+              {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
+            </NavLink>
             <button
               className="hamburger-menu"
               onClick={toggleMenu}
@@ -159,15 +165,17 @@ const Navbar = () => {
 
           <div className="mobile-nav-footer">
             <div className="mobile-nav-icons">
-              <div className="mobile-nav-icon">
-                <IoSearchOutline className="nav-icon" onClick={closeMenu} />
+              <div className="mobile-nav-icon" onClick={closeMenu}>
+                <IoSearchOutline className="nav-icon" />
               </div>
-              <div className="mobile-nav-icon">
-                <HiOutlineShoppingCart
-                  className="nav-icon"
-                  onClick={closeMenu}
-                />
-              </div>
+              <NavLink 
+                to="/cart" 
+                className="mobile-nav-icon cart-icon-container" 
+                onClick={closeMenu}
+              >
+                <HiOutlineShoppingCart className="nav-icon" />
+                {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
+              </NavLink>
               <div className="mobile-nav-icon">
                 <NavLink to="/authentication" onClick={closeMenu}>
                   <RiUserLine className="nav-icon" />
