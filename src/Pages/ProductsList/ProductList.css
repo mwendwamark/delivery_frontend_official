@@ -40,10 +40,11 @@
 }
 
 .page-title {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   font-weight: 300;
   margin-bottom: 0.5rem;
   letter-spacing: -1px;
+  color: var(--gold);
 }
 
 .page-subtitle {
@@ -262,19 +263,29 @@
   box-shadow: 0 0 0 3px rgba(140, 54, 59, 0.1);
 }
 
+/* .price-filter .price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+} */
+
 .price-filter .price-inputs {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .price-inputs input {
   flex: 1;
+  min-width: 0; /* Allow inputs to shrink below their content width */
+  width: 100%;
 }
 
 .price-inputs span {
   font-weight: 600;
   color: var(--wine-dark);
+  flex-shrink: 0; /* Prevent the dash from shrinking */
 }
 
 .checkbox-label {
@@ -763,6 +774,82 @@
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1200px) {
+  .filter-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .price-filter .price-inputs input {
+    min-width: 60px;
+    font-size: 0.9rem;
+    padding: 0.65rem 0.5rem;
+  }
+}
+
+/* ===== PRICE FILTER RESPONSIVE FIX ===== */
+
+/* Base price filter styles */
+.price-filter .price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.price-inputs input {
+  flex: 1;
+  min-width: 0; /* Allow inputs to shrink below their content width */
+  width: 100%;
+}
+
+.price-inputs span {
+  font-weight: 600;
+  color: var(--wine-dark);
+  flex-shrink: 0; /* Prevent the dash from shrinking */
+}
+
+/* Responsive breakpoints for price filter */
+@media (max-width: 1200px) {
+  .filter-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .price-filter .price-inputs input {
+    min-width: 60px;
+    font-size: 0.9rem;
+    padding: 0.65rem 0.5rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .filter-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+
+  .price-filter .price-inputs {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  .price-inputs span {
+    display: none; /* Hide the dash when stacked */
+  }
+
+  .price-inputs input {
+    width: 100%;
+  }
+
+  /* Add placeholder text to distinguish min/max when stacked */
+  .price-inputs input:first-of-type::placeholder {
+    content: "Min Price";
+  }
+
+  .price-inputs input:last-of-type::placeholder {
+    content: "Max Price";
+  }
+}
+
 @media (max-width: 768px) {
   .listing-header {
     padding: 2rem 0;
@@ -845,6 +932,10 @@
 @media (max-width: 480px) {
   .page-title {
     font-size: 2rem;
+  }
+
+  .page-subtitle{
+    font-size: 0.875rem;
   }
 
   .product-grid.grid {
