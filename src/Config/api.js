@@ -11,6 +11,16 @@ const API_ENDPOINTS = {
     GET_ALL: `${API_BASE_URL}/products`,
     GET_BY_ID: (id) => `${API_BASE_URL}/products/${id}`,
   },
+  // NEW: Paystack and Orders endpoints
+  ORDERS: {
+    CREATE_CASH_ON_DELIVERY: `${API_BASE_URL}/api/orders/create_cash_on_delivery`,
+    GET_STATUS: (id) => `${API_BASE_URL}/api/orders/${id}/status`,
+    GET_RECEIPT: (id) => `${API_BASE_URL}/api/orders/${id}/receipt`,
+  },
+  PAYSTACK: {
+    INITIATE_PAYMENT: `${API_BASE_URL}/api/paystack_initiate_payment`,
+    CALLBACK: `${API_BASE_URL}/api/paystack_callback`,
+  },
 };
 
 // Helper function for API calls
@@ -98,6 +108,42 @@ export const productsAPI = {
   getById: (id) => {
     return apiCall(API_ENDPOINTS.PRODUCTS.GET_BY_ID(id), {
       method: "GET",
+    });
+  },
+};
+
+// NEW: Orders API
+export const ordersAPI = {
+  // Create Cash on Delivery order
+  createCashOnDelivery: (orderData) => {
+    return apiCall(API_ENDPOINTS.ORDERS.CREATE_CASH_ON_DELIVERY, {
+      method: "POST",
+      body: JSON.stringify(orderData),
+    });
+  },
+
+  // Get order status
+  getStatus: (orderId) => {
+    return apiCall(API_ENDPOINTS.ORDERS.GET_STATUS(orderId), {
+      method: "GET",
+    });
+  },
+
+  // Get order receipt
+  getReceipt: (orderId) => {
+    return apiCall(API_ENDPOINTS.ORDERS.GET_RECEIPT(orderId), {
+      method: "GET",
+    });
+  },
+};
+
+// NEW: Paystack API
+export const paystackAPI = {
+  // Initiate Paystack payment
+  initiatePayment: (paymentData) => {
+    return apiCall(API_ENDPOINTS.PAYSTACK.INITIATE_PAYMENT, {
+      method: "POST",
+      body: JSON.stringify(paymentData),
     });
   },
 };

@@ -70,8 +70,6 @@
 
 .continue-shopping-btn {
   display: inline-block;
-  background-color: var(--wine-deep);
-  color: var(--primary-color);
   padding: 0.9rem 2rem;
   border-radius: 50px;
   text-decoration: none;
@@ -81,14 +79,17 @@
   text-transform: uppercase;
   letter-spacing: 0.75px;
   box-shadow: var(--shadow-sm);
+  background-color: transparent;
+  border: 1px solid var(--wine-deep);
+  box-shadow: var(--shadow-md);
+  color: var(--wine-deep);
 }
 
 .continue-shopping-btn:hover {
-  background-color: transparent;
-  border: 1px solid var(--wine-deep);
+  background-color: var(--wine-deep);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  color: var(--wine-deep);
+  color: var(--primary-color);
+
 }
 
 .cart-content {
@@ -342,7 +343,7 @@
   color: var(--primary-color);
   border: 2px solid transparent;
   border-radius: 50px;
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
   transition: var(--transition);
@@ -387,6 +388,15 @@
 .continue-shopping-link:hover {
   text-decoration: underline;
   color: var(--accent-light);
+}
+@media (max-width: 1190px) {
+  .cart-content {
+    gap: 1.5rem;
+  }
+  .checkout-btn {
+    padding: 0.7rem 1.1rem;
+    font-size: var(--text-sm);
+  }
 }
 
 @media (max-width: 768px) {

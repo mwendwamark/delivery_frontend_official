@@ -1,20 +1,21 @@
+// src/contexts/CartContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
-    // Load cart from localStorage on initial render
+    // Load cart from sessionStorage on initial render
     if (typeof window !== 'undefined') {
-      const savedCart = localStorage.getItem('cart');
+      const savedCart = sessionStorage.getItem('cart');
       return savedCart ? JSON.parse(savedCart) : [];
     }
     return [];
   });
 
-  // Save cart to localStorage whenever it changes
+  // Save cart to sessionStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cartItems));
+    sessionStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
   const addToCart = (product, variant) => {
@@ -42,8 +43,7 @@ export const CartProvider = ({ children }) => {
           variantId: variant.id,
           size: variant.size,
           price: variant.price,
-          // image: product.images?.[0]?.url || '',
-          image: product.image_url,
+          image: product.image_url, // Ensure product.image_url is correctly passed
           quantity: 1,
         },
       ];
