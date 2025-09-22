@@ -94,7 +94,7 @@ const Navbar = () => {
               </NavLink>
             </div>
             <NavLink
-              to="/make-order"
+              to="/products"
               className="nav-item_right-btn btn btn-primary"
               onClick={closeMenu}
             >
@@ -183,7 +183,7 @@ const Navbar = () => {
               </div>
             </div>
             <NavLink
-              to="/make-order"
+              to="/products"
               className="mobile-order-btn btn btn-primary"
               onClick={closeMenu}
             >

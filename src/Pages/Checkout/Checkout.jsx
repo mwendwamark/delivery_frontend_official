@@ -413,18 +413,24 @@ const CheckoutPage = () => {
 
   const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
 
-  // Effect for polling order status from your Rails backend
-
+  // Updated useEffect for polling order status
   useEffect(() => {
     let pollInterval;
+    let pollAttempts = 0;
+    const maxPollAttempts = 24; // Poll for 2 minutes (24 * 5 seconds)
 
     if (isLoadingPayment && currentOrderId) {
       pollInterval = setInterval(async () => {
         try {
-          const data = await ordersAPI.getStatus(currentOrderId); // Using new API method
+          pollAttempts++;
+          console.log(
+            `Polling attempt ${pollAttempts} for order ${currentOrderId}`
+          );
 
+          const data = await ordersAPI.getStatus(currentOrderId);
           setOrderStatus(data);
 
+          // Check for successful payment statuses
           if (
             data.payment_status === "Paystack Paid" ||
             data.payment_status === "Mpesa Paid" ||
@@ -433,38 +439,57 @@ const CheckoutPage = () => {
             setPaymentMessage(
               "Payment successful! Redirecting to confirmation..."
             );
-
             setIsLoadingPayment(false);
-
             clearInterval(pollInterval);
-
             clearCart();
 
-            // navigate(`/order-confirmation/${currentOrderId}`);
-          } else if (
+        
+            setTimeout(() => {
+              navigate(`/order-confirmation/${currentOrderId}`);
+            }, 2000);
+
+            return; // Exit the polling
+          }
+
+          // Check for failed payment statuses
+          if (
             data.payment_status === "Paystack Failed" ||
             data.payment_status === "payment_failed"
           ) {
             setPaymentMessage("Payment failed. Please try again.");
-
             setIsLoadingPayment(false);
+            clearInterval(pollInterval);
+            return;
+          }
 
+          // Stop polling after max attempts
+          if (pollAttempts >= maxPollAttempts) {
+            setPaymentMessage(
+              "Payment verification is taking longer than expected. Please check your order history."
+            );
+            setIsLoadingPayment(false);
             clearInterval(pollInterval);
           }
         } catch (error) {
           console.error("Network error polling order status:", error);
+          pollAttempts++;
 
-          setPaymentMessage(
-            "Error checking payment status. Please check your order history."
-          );
+          if (pollAttempts >= maxPollAttempts) {
+            setPaymentMessage(
+              "Error checking payment status. Please check your order history."
+            );
+            setIsLoadingPayment(false);
+            clearInterval(pollInterval);
+          }
+        }
+      }, 5000); // Poll every 5 seconds instead of 5000ms for better UX
 
-          setIsLoadingPayment(false);
-
+      // Cleanup function
+      return () => {
+        if (pollInterval) {
           clearInterval(pollInterval);
         }
-      }, 5000);
-
-      return () => clearInterval(pollInterval);
+      };
     }
   }, [isLoadingPayment, currentOrderId, clearCart, navigate]);
 
