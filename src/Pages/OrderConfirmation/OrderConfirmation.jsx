@@ -1,7 +1,8 @@
+// frontend/src/pages/OrderConfirmationPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ordersAPI } from '../../Config/api'; // Adjust import path as needed
-import "./OrderConfirmation.css"; // Import the custom CSS file
+import { ordersAPI } from '../../Config/api';
+import "./OrderConfirmation.css";
 
 const OrderConfirmationPage = () => {
   const { orderId } = useParams();
@@ -20,12 +21,9 @@ const OrderConfirmationPage = () => {
       setLoading(true);
       const data = await ordersAPI.getStatus(orderId);
       setOrderDetails(data);
-      
-      // Hide animation after 3 seconds
       setTimeout(() => {
         setShowAnimation(false);
       }, 3000);
-      
     } catch (error) {
       console.error('Error fetching order details:', error);
       setError('Failed to load order details');
@@ -36,8 +34,12 @@ const OrderConfirmationPage = () => {
 
   const downloadReceipt = async () => {
     try {
-      // Create a temporary link to download the receipt
-      const receiptUrl = `${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'}${orderDetails.receipt_url}`;
+      // Use download_url from the API response for direct S3 download
+      const receiptUrl = orderDetails.download_url || orderDetails.receipt_url;
+      if (!receiptUrl) {
+        throw new Error('Receipt URL not available');
+      }
+
       const link = document.createElement('a');
       link.href = receiptUrl;
       link.download = `receipt_order_${orderId}.pdf`;
@@ -82,12 +84,9 @@ const OrderConfirmationPage = () => {
   return (
     <div className="order-confirmation-page section">
       <div className="order-confirmation-container">
-        
-        {/* Success Animation */}
         {showAnimation && (
           <div className="animation-overlay">
             <div className="animation-card">
-              {/* Animated Checkmark */}
               <div className="checkmark-container">
                 <div className="checkmark-inner-circle">
                   <svg 
@@ -104,14 +103,10 @@ const OrderConfirmationPage = () => {
                     />
                   </svg>
                 </div>
-                {/* Animated ring */}
                 <div className="checkmark-ping"></div>
               </div>
-              
               <h2 className="animation-title">Payment Successful!</h2>
               <p className="animation-subtitle">Your order has been confirmed</p>
-              
-              {/* Loading dots */}
               <div className="loading-dots">
                 <div className="dot"></div>
                 <div className="dot" style={{animationDelay: '0.1s'}}></div>
@@ -121,9 +116,7 @@ const OrderConfirmationPage = () => {
           </div>
         )}
 
-        {/* Main Content */}
         <div className="order-card">
-          {/* Header */}
           <div className="order-card-header">
             <div className="header-content">
               <div>
@@ -140,11 +133,8 @@ const OrderConfirmationPage = () => {
             </div>
           </div>
 
-          {/* Order Details */}
           <div className="order-card-body">
             <div className="order-details-grid">
-              
-              {/* Order Summary */}
               <div>
                 <h3 className="summary-title">Order Summary</h3>
                 <div className="summary-card">
@@ -175,7 +165,6 @@ const OrderConfirmationPage = () => {
                 </div>
               </div>
 
-              {/* Next Steps */}
               <div>
                 <h3 className="next-steps-title">What's Next?</h3>
                 <div className="next-steps-list">
@@ -201,7 +190,6 @@ const OrderConfirmationPage = () => {
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className="action-buttons">
               <div className="button-group">
                 {orderDetails.receipt_url ? (
@@ -217,7 +205,7 @@ const OrderConfirmationPage = () => {
                 ) : (
                   <div className="action-button btn-orders-disabled">
                     <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.0030 01-15.357-2m15.357 2H15" />
                     </svg>
                     <span>Receipt Generating...</span>
                   </div>
@@ -247,7 +235,6 @@ const OrderConfirmationPage = () => {
           </div>
         </div>
 
-        {/* Additional Info Card */}
         <div className="info-card">
           <div className="info-content">
             <div className="info-icon-container">
