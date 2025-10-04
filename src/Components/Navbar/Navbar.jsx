@@ -81,6 +81,9 @@ const Navbar = () => {
 
           {/* Desktop Navigation - Right Items */}
           <div className="desktop-nav nav-items_right">
+            <NavLink to="/orders" className="nav-item_right" onClick={closeMenu}>
+              My Orders
+            </NavLink>
             <div className="nav-item_right-icon">
               <IoSearchOutline className="nav-right_icon" />
             </div>
@@ -137,29 +140,20 @@ const Navbar = () => {
             <NavLink to="/" className="mobile-nav-item" onClick={closeMenu}>
               Home
             </NavLink>
-            <NavLink
-              to="/products"
-              className="mobile-nav-item"
-              onClick={closeMenu}
-            >
+            <NavLink to="/products" className="mobile-nav-item" onClick={closeMenu}>
               Products
             </NavLink>
             <NavLink to="/faqs" className="mobile-nav-item" onClick={closeMenu}>
               FAQs
             </NavLink>
-            <NavLink
-              to="/about-us"
-              className="mobile-nav-item"
-              onClick={closeMenu}
-            >
+            <NavLink to="/about-us" className="mobile-nav-item" onClick={closeMenu}>
               About Us
             </NavLink>
-            <NavLink
-              to="/contacts"
-              className="mobile-nav-item"
-              onClick={closeMenu}
-            >
+            <NavLink to="/contacts" className="mobile-nav-item" onClick={closeMenu}>
               Contacts
+            </NavLink>
+            <NavLink to="/orders" className="mobile-nav-item" onClick={closeMenu}>
+              My Orders
             </NavLink>
           </div>
 

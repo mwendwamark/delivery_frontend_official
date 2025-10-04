@@ -11,8 +11,9 @@ const API_ENDPOINTS = {
     GET_ALL: `${API_BASE_URL}/products`,
     GET_BY_ID: (id) => `${API_BASE_URL}/products/${id}`,
   },
-  // NEW: Paystack and Orders endpoints
+  // Paystack and Orders endpoints
   ORDERS: {
+    LIST: (params = '') => `${API_BASE_URL}/api/orders${params ? `?${new URLSearchParams(params).toString()}` : ''}`,
     CREATE_CASH_ON_DELIVERY: `${API_BASE_URL}/api/orders/create_cash_on_delivery`,
     GET_STATUS: (id) => `${API_BASE_URL}/api/orders/${id}/status`,
     GET_RECEIPT: (id) => `${API_BASE_URL}/api/orders/${id}/receipt`,
@@ -107,37 +108,67 @@ export const productsAPI = {
   // Get product by ID
   getById: (id) => {
     return apiCall(API_ENDPOINTS.PRODUCTS.GET_BY_ID(id), {
-      method: "GET",
+      method: "GET"
     });
   },
 };
 
-// NEW: Orders API
+// Orders API
 export const ordersAPI = {
-  // Create Cash on Delivery order
-  createCashOnDelivery: (orderData) => {
-    return apiCall(API_ENDPOINTS.ORDERS.CREATE_CASH_ON_DELIVERY, {
-      method: "POST",
-      body: JSON.stringify(orderData),
+  // Get orders with optional filters and pagination
+  getOrders: async (filters = {}) => {
+    const params = {
+      page: filters.page || 1,
+      per_page: filters.perPage || 15,
+      status: filters.status,
+      date_range: filters.dateRange,
+      search: filters.search
+    };
+    
+    // Remove undefined or null values
+    Object.keys(params).forEach(key => params[key] === undefined && delete params[key]);
+    
+    const response = await apiCall(API_ENDPOINTS.ORDERS.LIST(params));
+    return response;
+  },
+
+  // CreateCash on Delivery order
+  createCashOnDelivery: async (orderData) => {
+    const response = await apiCall(API_ENDPOINTS.ORDERS.CREATE_CASH_ON_DELIVERY, {
+      method: 'POST',
+      body: JSON.stringify({ order: orderData }),
     });
+    return response;
   },
 
   // Get order status
-  getStatus: (orderId) => {
-    return apiCall(API_ENDPOINTS.ORDERS.GET_STATUS(orderId), {
-      method: "GET",
-    });
+  getStatus: async (orderId) => {
+    const response = await apiCall(API_ENDPOINTS.ORDERS.GET_STATUS(orderId));
+    return response;
   },
 
   // Get order receipt
-  getReceipt: (orderId) => {
-    return apiCall(API_ENDPOINTS.ORDERS.GET_RECEIPT(orderId), {
-      method: "GET",
-    });
+  getReceipt: async (orderId) => {
+    const response = await apiCall(API_ENDPOINTS.ORDERS.GET_RECEIPT(orderId));
+    return response;
   },
+
+  // Get receipt info
+  getReceiptInfo: async (orderId) => {
+    const response = await apiCall(`${API_ENDPOINTS.ORDERS.GET_RECEIPT(orderId)}_info`);
+    return response;
+  },
+  
+  // Generate receipt
+  generateReceipt: async (orderId) => {
+    const response = await apiCall(`${API_ENDPOINTS.ORDERS.GET_RECEIPT(orderId)}/generate`, {
+      method: 'POST'
+    });
+    return response;
+  }
 };
 
-// NEW: Paystack API
+// Paystack API
 export const paystackAPI = {
   // Initiate Paystack payment
   initiatePayment: (paymentData) => {
@@ -146,6 +177,13 @@ export const paystackAPI = {
       body: JSON.stringify(paymentData),
     });
   },
+  
+  // Handle Paystack callback
+  handleCallback: (reference) => {
+    return apiCall(`${API_ENDPOINTS.PAYSTACK.CALLBACK}?reference=${reference}`, {
+      method: "GET"
+    });
+  }
 };
 
 export { API_BASE_URL, API_ENDPOINTS, apiCall };
